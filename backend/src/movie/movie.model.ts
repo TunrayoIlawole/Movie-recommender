@@ -1,5 +1,3 @@
-import { Duration } from "./dto/movie-request.dto";
-
 export class Movie {
      title: string;
      year: string;
@@ -23,4 +21,10 @@ export class Movie {
         const data = JSON.parse(json);
         return new Movie(data);
     }
+}
+
+export enum Duration {
+    SHORT = 'Less than one hour thirty minutes',
+    MEDIUM = 'Less than two hours',
+    LONG = 'More than two hours'
 }
