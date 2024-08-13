@@ -13,8 +13,8 @@ export class MovieService {
 
             const moviesData = JSON.parse(response);
 
-            if (Array.isArray(moviesData)) {
-                return moviesData.map((movieData: any) => new Movie(movieData));
+            if (Array.isArray(moviesData.movies)) {
+                return moviesData.movies.map((movieData: any) => new Movie(movieData));
             } else {
                 throw new Error("Unexpected response format");
             }
