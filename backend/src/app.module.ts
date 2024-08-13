@@ -6,8 +6,6 @@ import { MovieController } from './movie/movie.controller';
 import { MovieModule } from './movie/movie.module';
 
 @Module({
-  imports: [MovieModule],
-  controllers: [AppController, MovieController],
-  providers: [AppService, MovieService],
+  imports: [MovieModule]
 })
 export class AppModule {}
