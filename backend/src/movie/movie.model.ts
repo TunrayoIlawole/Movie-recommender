@@ -24,7 +24,7 @@ export class Movie {
 }
 
 export enum Duration {
-    SHORT = 'Less than one hour thirty minutes',
+    SHORT = 'One hour thirty minutes',
     MEDIUM = 'Less than two hours',
     LONG = 'More than two hours'
 }
