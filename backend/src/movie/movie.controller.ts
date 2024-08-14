@@ -19,12 +19,10 @@ export class MovieController {
                 message: "Movies returned successfully",
                 data: movies
             });
-            // res.status(HttpStatus.OK).json(movies);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-                error: error.code,
                 message: "Failed to get movie recommendations"
             })
         }
