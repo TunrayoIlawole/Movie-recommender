@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PiecesClient } from 'pieces-copilot-sdk';
 import { MovieRequestDto } from 'src/movie/dto/movie-request.dto';
 import { Duration } from 'src/movie/movie.model';
@@ -6,6 +6,8 @@ import { Duration } from 'src/movie/movie.model';
 
 @Injectable()
 export class PiecesService {
+    private readonly logger = new Logger(PiecesService.name);
+    
     private piecesClient: PiecesClient;
 
     constructor() {
@@ -22,7 +24,7 @@ export class PiecesService {
                 question: movieRequestString
             });
         } catch(error) {
-            console.log(`Error sending movie request: ${error}`);
+            this.logger.error("Error communication with the Pieces API", error.stack);
             throw new Error("Failed to send movie request to pieces");
         }
 

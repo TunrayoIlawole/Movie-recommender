@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Logger, Post, Res } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { MovieRequestDto } from './dto/movie-request.dto';
 import { Movie } from './movie.model';
@@ -6,6 +6,8 @@ import { Response } from 'express';
 
 @Controller('movies')
 export class MovieController {
+
+    private readonly logger = new Logger(MovieController.name);
 
     constructor(private readonly movieService: MovieService) {}
 
@@ -20,7 +22,7 @@ export class MovieController {
                 data: movies
             });
         } catch (error) {
-            console.error(error);
+            this.logger.error("Failed to get movie recommendations", error.stack);
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: "Failed to get movie recommendations"
