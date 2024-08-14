@@ -9,18 +9,20 @@ export class MovieService {
 
     async getMovieRecommendations(movieRequestDto: MovieRequestDto): Promise<Movie[]> {
         try {
-            const response = (await this.piecesService.postMovieRequest(movieRequestDto)).replace("```json", "").replace("```", "");
+            const response = (await this.piecesService.sendMovieRequest(movieRequestDto)).replace("```json", "").replace("```", "");
 
             const moviesData = JSON.parse(response);
 
             if (Array.isArray(moviesData.movies)) {
                 return moviesData.movies.map((movieData: any) => new Movie(movieData));
             } else {
-                throw new Error("Unexpected response format");
+                throw new Error("Error: Unexpected movie response format");
             }
         } catch (error) {
             console.log(error);
-            throw new Error("Failed to get movie recommendations");
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            throw new Error(`Error: ${errorCode} - ${errorMessage}`);
         }
     }
 }
