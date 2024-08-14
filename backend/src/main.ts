@@ -4,21 +4,27 @@ import * as Pieces from '@pieces.app/pieces-os-client';
 import os from 'os';
 
 
-async function bootstrap() {
-  let port = 1000;
+async function configurePiecesClient(): Promise<void> {
+  const port = 1000;
 
   const configuration = new Pieces.Configuration({
     basePath: `http://localhost:${port}`
   })
 
-  const apiInstance = new Pieces.WellKnownApi(configuration)
+  const apiInstance = new Pieces.WellKnownApi(configuration);
 
-  apiInstance.getWellKnownHealth().then((data: string) => {
-    console.log(data) // ok
-  }).catch((error: unknown) => console.error(error));
+  try {
+    const data = await apiInstance.getWellKnownHealth();
+    console.log(data); 
+  } catch(error) {
+    console.error(`Error getting health data: ${error}`);
+  }
+}
+
+async function bootstrap() {
+  await configurePiecesClient();
 
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
-
 }
 bootstrap();
